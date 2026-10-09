@@ -108,6 +108,202 @@
       text-shadow: 0 1px 3px rgba(0,0,0,0.5);
     }
 
+    .garden-bed {
+      position: absolute;
+      border-radius: 8px;
+      box-sizing: border-box;
+      cursor: grab;
+      z-index: 1;
+      user-select: none;
+      padding: 8px;
+      box-shadow:
+        0 3px 0 var(--bed-wood-edge, #6b4a28),
+        0 5px 14px rgba(0,0,0,0.28),
+        inset 0 1px 0 rgba(255,240,210,0.35),
+        inset 0 -2px 0 rgba(80,50,20,0.25);
+    }
+    /* Light brown */
+    .garden-bed.brown-0 {
+      --bed-wood-edge: #8a6a3c;
+      background: repeating-linear-gradient(90deg, #e2c48a 0px, #d4b07a 3px, #ebcfa0 6px, #c9a86a 9px, #e2c48a 12px);
+    }
+    .garden-bed.brown-0 .garden-bed-soil {
+      background:
+        radial-gradient(circle at 16% 24%, rgba(60,35,12,0.2) 0 1.5px, transparent 2.5px),
+        radial-gradient(circle at 38% 62%, rgba(60,35,12,0.16) 0 2px, transparent 3px),
+        radial-gradient(circle at 68% 34%, rgba(60,35,12,0.14) 0 1.5px, transparent 2.5px),
+        radial-gradient(circle at 82% 72%, rgba(255,240,200,0.12) 0 2px, transparent 3px),
+        linear-gradient(180deg, #c4a06a 0%, #a67c52 42%, #8b5e34 100%);
+    }
+    /* Medium brown */
+    .garden-bed.brown-1 {
+      --bed-wood-edge: #6b4a28;
+      background: repeating-linear-gradient(90deg, #c9a06a 0px, #b8894f 3px, #d4b07a 6px, #a67c45 9px, #c9a06a 12px);
+    }
+    .garden-bed.brown-1 .garden-bed-soil {
+      background:
+        radial-gradient(circle at 16% 24%, rgba(40,22,8,0.28) 0 1.5px, transparent 2.5px),
+        radial-gradient(circle at 38% 62%, rgba(40,22,8,0.22) 0 2px, transparent 3px),
+        radial-gradient(circle at 68% 34%, rgba(40,22,8,0.2) 0 1.5px, transparent 2.5px),
+        radial-gradient(circle at 82% 72%, rgba(255,230,180,0.08) 0 2px, transparent 3px),
+        linear-gradient(180deg, #8f5e35 0%, #6e4424 42%, #5a361c 100%);
+    }
+    /* Dark brown */
+    .garden-bed.brown-2 {
+      --bed-wood-edge: #3d2814;
+      background: repeating-linear-gradient(90deg, #8a6434 0px, #6e4c28 3px, #9a7240 6px, #5a3c20 9px, #8a6434 12px);
+    }
+    .garden-bed.brown-2 .garden-bed-soil {
+      background:
+        radial-gradient(circle at 16% 24%, rgba(0,0,0,0.35) 0 1.5px, transparent 2.5px),
+        radial-gradient(circle at 38% 62%, rgba(0,0,0,0.28) 0 2px, transparent 3px),
+        radial-gradient(circle at 68% 34%, rgba(0,0,0,0.25) 0 1.5px, transparent 2.5px),
+        radial-gradient(circle at 82% 72%, rgba(255,220,160,0.05) 0 2px, transparent 3px),
+        linear-gradient(180deg, #5a361c 0%, #3d2412 42%, #2a180c 100%);
+    }
+    .garden-bed-soil {
+      position: absolute;
+      inset: 8px;
+      border-radius: 3px;
+      pointer-events: none;
+      box-shadow: inset 0 3px 10px rgba(0,0,0,0.4), inset 0 -1px 0 rgba(255,220,160,0.08);
+    }
+    .garden-bed.dragging,
+    .garden-bed.resizing {
+      cursor: grabbing;
+      z-index: 5;
+    }
+    .garden-bed-label {
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: calc(100% - 24px);
+      padding: 4px 10px 5px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: #3f3117;
+      text-align: center;
+      line-height: 1.2;
+      pointer-events: none;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      z-index: 4;
+      /* Minecraft-style wooden sign board */
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.12) 0%, transparent 40%),
+        repeating-linear-gradient(
+          90deg,
+          #c6a15a 0px,
+          #b8934e 2px,
+          #d2b06a 4px,
+          #a67f42 6px,
+          #c6a15a 8px
+        );
+      border: 2px solid #6b4e28;
+      border-radius: 2px;
+      box-shadow:
+        inset 0 0 0 1px #e0c588,
+        inset 0 -2px 0 rgba(80,50,20,0.25),
+        0 2px 0 #5a3f1c,
+        0 3px 6px rgba(0,0,0,0.25);
+    }
+    .garden-bed-label::after {
+      /* short post under the sign */
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: -7px;
+      width: 5px;
+      height: 7px;
+      transform: translateX(-50%);
+      background: linear-gradient(90deg, #8a6434, #c6a15a 40%, #6b4e28);
+      box-shadow: 1px 0 0 #5a3f1c;
+    }
+    .garden-bed-del {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 22px;
+      height: 22px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(245,230,200,0.9);
+      color: #6b4423;
+      font-size: 12px;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.15s;
+      z-index: 2;
+      line-height: 1;
+    }
+    .garden-bed:hover .garden-bed-del { opacity: 1; }
+    .bed-resize {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+      background: linear-gradient(135deg, #e2c48a, #a67c45);
+      border: 1px solid #6b4a28;
+      cursor: nwse-resize;
+      z-index: 3;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+    }
+    .flower-slot { z-index: 10; }
+
+    #garden-toast-wrap {
+      position: fixed;
+      inset: 0;
+      z-index: 400;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(20, 16, 10, 0.28);
+      backdrop-filter: blur(2px);
+    }
+    #garden-toast-wrap.show { display: flex; }
+    #garden-toast {
+      max-width: min(420px, 92vw);
+      padding: 18px 20px;
+      background: #fffaf3;
+      border: 1.5px solid rgba(120,80,40,0.28);
+      border-radius: 16px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+      color: #3a2a18;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.45;
+      text-align: center;
+    }
+    #garden-toast .toast-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 14px;
+    }
+    #garden-toast .toast-actions button {
+      border: none;
+      border-radius: 10px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    #garden-toast .toast-ok {
+      background: #2d6e23;
+      color: #fff;
+    }
+    #garden-toast .toast-cancel {
+      background: #efe8dc;
+      color: #5c4a32;
+    }
+
     /* add button */
     #add-btn {
       position: fixed;
@@ -126,6 +322,26 @@
       z-index: 20;
     }
     #add-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.28);
+    }
+    #bed-btn {
+      position: fixed;
+      bottom: 22px;
+      right: 188px;
+      background: rgba(255,255,255,0.93);
+      border: 2px solid rgba(0,0,0,0.1);
+      border-radius: 28px;
+      padding: 10px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #2d6e23;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+      transition: transform 0.15s, box-shadow 0.15s;
+      z-index: 20;
+    }
+    #bed-btn:hover {
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(0,0,0,0.28);
     }
@@ -645,7 +861,11 @@
 <div class="empty-hint" id="empty-hint">
   <div style="font-size:48px;">🌱</div>
   <div>Your garden is empty</div>
-  <p>Click the button below to plant your first hobby</p>
+  <p>Plant a hobby or create a garden bed to get started</p>
+</div>
+
+<div id="garden-toast-wrap" role="dialog" aria-modal="true" aria-live="polite">
+  <div id="garden-toast"></div>
 </div>
 
 <!-- Congrats popup -->
@@ -729,6 +949,7 @@
 <button id="music-btn" title="Your uploaded audio" style="position:fixed;bottom:22px;left:268px;background:rgba(255,255,255,0.93);border:2px solid rgba(0,0,0,0.1);border-radius:28px;padding:10px 16px;font-size:14px;font-weight:600;color:#2d6e23;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,0.2);transition:transform 0.15s,box-shadow 0.15s;z-index:20;">🎧 Audio</button>
 <button id="quick-timer-btn" style="position:fixed;bottom:22px;left:380px;background:rgba(255,255,255,0.93);border:2px solid rgba(0,0,0,0.1);border-radius:28px;padding:10px 20px;font-size:14px;font-weight:600;color:#6c5ce7;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,0.2);transition:transform 0.15s,box-shadow 0.15s;z-index:20;">⏱ Timer</button>
 <button id="compare-btn" style="position:fixed;bottom:22px;left:24px;background:rgba(255,255,255,0.93);border:2px solid rgba(0,0,0,0.1);border-radius:28px;padding:10px 20px;font-size:14px;font-weight:600;color:#2d6e23;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,0.2);transition:transform 0.15s,box-shadow 0.15s;z-index:20;">⚖ Compare</button>
+<button id="bed-btn">＋ Garden bed</button>
 <button id="add-btn">＋ Plant a hobby</button>
 
 <!-- Music library modal -->
@@ -779,10 +1000,41 @@
       <input type="text" id="hobby-name" placeholder="e.g. Guitar, Drawing, Chess…" maxlength="30">
     </div>
     <div class="add-field">
+      <label>Garden bed (optional)</label>
+      <select id="hobby-bed-select" style="width:100%;padding:10px 12px;border-radius:10px;border:1.5px solid #ddd;font-size:14px;font-weight:600;color:#333;background:#fafafa;">
+        <option value="">Outside beds</option>
+      </select>
+    </div>
+    <div class="add-field">
       <label>Pick a flower color</label>
       <div class="color-swatches" id="color-swatches"></div>
     </div>
     <button class="add-submit" id="add-submit">Plant it 🌱</button>
+  </div>
+</div>
+
+<!-- Add Garden Bed Modal -->
+<div id="overlay-bed" style="display:none;position:fixed;inset:0;background:var(--modal-bg);z-index:110;align-items:center;justify-content:center;backdrop-filter:blur(3px);">
+  <div id="add-modal">
+    <button class="modal-close" id="bed-modal-close">✕</button>
+    <h2>Create a garden bed</h2>
+    <div class="add-field">
+      <label>Name</label>
+      <input type="text" id="bed-name" placeholder="e.g. Uni, Health, Creative…" maxlength="24">
+    </div>
+    <div class="add-field">
+      <label>Brown shade</label>
+      <div id="bed-brown-options" style="display:flex;gap:10px;">
+        <button type="button" class="brown-opt selected" data-brown="0" title="Light" style="flex:1;height:44px;border-radius:10px;border:2.5px solid #333;cursor:pointer;background:linear-gradient(180deg,#e2c48a,#a67c52);"></button>
+        <button type="button" class="brown-opt" data-brown="1" title="Medium" style="flex:1;height:44px;border-radius:10px;border:2.5px solid transparent;cursor:pointer;background:linear-gradient(180deg,#c9a06a,#5a361c);"></button>
+        <button type="button" class="brown-opt" data-brown="2" title="Dark" style="flex:1;height:44px;border-radius:10px;border:2.5px solid transparent;cursor:pointer;background:linear-gradient(180deg,#8a6434,#2a180c);"></button>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:6px;font-size:11px;color:#666;text-align:center;">
+        <span style="flex:1;">Light</span><span style="flex:1;">Medium</span><span style="flex:1;">Dark</span>
+      </div>
+    </div>
+    <p style="font-size:13px;color:#3a3a3a;line-height:1.45;margin:0 0 16px;">A bed is a wooden plot with dirt. Drag plants into it to group them; drag them out to leave.</p>
+    <button class="add-submit" id="bed-submit">Plant the bed 🌿</button>
   </div>
 </div>
 
@@ -803,10 +1055,10 @@ async function loadState() {
     try {
       const res = await fetch('/data');
       return await res.json();
-    } catch { return { hobbies: [] }; }
+    } catch { return { hobbies: [], beds: [] }; }
   }
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || { hobbies: [] }; }
-  catch { return { hobbies: [] }; }
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || { hobbies: [], beds: [] }; }
+  catch { return { hobbies: [], beds: [] }; }
 }
 
 function saveState() {
@@ -821,12 +1073,143 @@ function saveState() {
   }
 }
 
-let state = { hobbies: [] };
+let state = { hobbies: [], beds: [] };
 let selectedHobbyId = null;
+const BED_BROWN_CHART = ['#c4a06a', '#8b5e34', '#4a2c16'];
+let pickedBrown = 1;
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 function totalHours(hobby) {
   return hobby.sessions ? hobby.sessions.reduce((s, x) => s + x.hours, 0) : 0;
+}
+function bedBrownLevel(bed) {
+  const n = Number(bed?.brown);
+  return (n === 0 || n === 1 || n === 2) ? n : 1;
+}
+function bedBrown(bed) {
+  return BED_BROWN_CHART[bedBrownLevel(bed)];
+}
+function ensureBeds() {
+  if (!Array.isArray(state.beds)) state.beds = [];
+  return state.beds;
+}
+function bedsOverlap(a, b) {
+  return a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h;
+}
+function withBedPad(r, padX, padY) {
+  return { x: r.x - padX, y: r.y - padY, w: r.w + padX * 2, h: r.h + padY * 2 };
+}
+function bedOverlapsAny(candidate, exceptId, padX = 0, padY = 0) {
+  const c = (padX || padY) ? withBedPad(candidate, padX, padY) : candidate;
+  return ensureBeds().some(b => b.id !== exceptId && bedsOverlap(c, b));
+}
+function clampBed(b) {
+  b.w = Math.max(12, Math.min(60, b.w));
+  b.h = Math.max(40, Math.min(160, b.h));
+  b.x = Math.max(2, Math.min(98 - b.w, b.x));
+  b.y = Math.max(0, Math.min(200 - b.h, b.y));
+  return b;
+}
+function pointInBed(px, py, bed) {
+  return px >= bed.x && px <= bed.x + bed.w && py >= bed.y && py <= bed.y + bed.h;
+}
+function findBedAt(px, py) {
+  return ensureBeds().find(b => pointInBed(px, py, b)) || null;
+}
+function recomputeAllBedMembership() {
+  state.hobbies.forEach(h => {
+    const bed = findBedAt(h.x ?? 50, h.y ?? 0);
+    h.bedId = bed ? bed.id : null;
+  });
+}
+function assignHobbyBed(hobby) {
+  const bed = findBedAt(hobby.x ?? 50, hobby.y ?? 0);
+  hobby.bedId = bed ? bed.id : null;
+}
+function findFreeBedSpot(w, h) {
+  const stepX = 3;
+  const stepY = 10;
+  const maxX = 98 - w;
+  const maxY = 200 - h;
+  // Prefer lower rows first (closer to the ground strip), left → right
+  for (let y = 6; y <= maxY; y += stepY) {
+    for (let x = 4; x <= maxX; x += stepX) {
+      const trial = { x, y, w, h };
+      if (!bedOverlapsAny(trial, null, 2, 8)) return { x, y };
+    }
+  }
+  return null;
+}
+let toastTimer = null;
+let toastConfirmCb = null;
+
+function hideGardenToast() {
+  const wrap = document.getElementById('garden-toast-wrap');
+  if (!wrap) return;
+  wrap.classList.remove('show');
+  toastConfirmCb = null;
+  clearTimeout(toastTimer);
+}
+
+function showGardenToast(message, opts = {}) {
+  const wrap = document.getElementById('garden-toast-wrap');
+  const el = document.getElementById('garden-toast');
+  if (!wrap || !el) return;
+  clearTimeout(toastTimer);
+  toastConfirmCb = null;
+
+  if (opts.confirm) {
+    el.innerHTML = `
+      <div>${escHtml(message)}</div>
+      <div class="toast-actions">
+        <button type="button" class="toast-cancel" data-toast="no">Cancel</button>
+        <button type="button" class="toast-ok" data-toast="yes">Remove</button>
+      </div>
+    `;
+    toastConfirmCb = opts.onConfirm || null;
+  } else {
+    el.innerHTML = `
+      <div>${escHtml(message)}</div>
+      <div class="toast-actions">
+        <button type="button" class="toast-ok" data-toast="ok">OK</button>
+      </div>
+    `;
+    toastTimer = setTimeout(hideGardenToast, opts.duration || 3500);
+  }
+  wrap.classList.add('show');
+}
+
+document.getElementById('garden-toast-wrap').addEventListener('click', e => {
+  if (e.target.id === 'garden-toast-wrap' && !toastConfirmCb) {
+    hideGardenToast();
+    return;
+  }
+  const btn = e.target.closest('[data-toast]');
+  if (!btn) return;
+  const action = btn.getAttribute('data-toast');
+  if (action === 'yes' && toastConfirmCb) {
+    const cb = toastConfirmCb;
+    hideGardenToast();
+    cb();
+    return;
+  }
+  hideGardenToast();
+});
+function pointInsideBed(bed) {
+  return {
+    x: bed.x + bed.w * (0.25 + Math.random() * 0.5),
+    y: bed.y + bed.h * (0.2 + Math.random() * 0.45),
+  };
+}
+function bedById(id) {
+  return ensureBeds().find(b => b.id === id) || null;
+}
+function hexToRgba(hex, a) {
+  const h = (hex || '#8fbc8f').replace('#', '');
+  const full = h.length === 3 ? h.split('').map(c => c + c).join('') : h;
+  const n = parseInt(full, 16);
+  const r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+  return `rgba(${r},${g},${b},${a})`;
 }
 function getStage(hours) {
   if (hours === 0) return 0;
@@ -842,7 +1225,7 @@ function hobbyProgress(hobby) {
 function spawnNextGen(hobby) {
   const newX = Math.max(8, Math.min(92, (hobby.x ?? 50) + (Math.random() - 0.5) * 20));
   const gen = (hobby.generation || 1) + 1;
-  state.hobbies.push({
+  const child = {
     id: uid(),
     name: hobby.name,
     color: hobby.color,
@@ -850,7 +1233,9 @@ function spawnNextGen(hobby) {
     x: newX,
     y: Math.random() * 55,
     generation: gen,
-  });
+  };
+  assignHobbyBed(child);
+  state.hobbies.push(child);
   hobby.spawned = true;
   saveState();
   renderGarden();
@@ -1286,6 +1671,7 @@ const drag = {
   moved: false,
 
   start(e, hobbyId, el) {
+    if (bedDrag.active) return;
     this.hobbyId = hobbyId;
     this.el = el;
     this.startX = e.clientX;
@@ -1319,9 +1705,12 @@ const drag = {
       if (hobby) {
         hobby.x = Math.max(4, Math.min(96, (e.clientX - rect.left) / rect.width * 100));
         hobby.y = Math.max(0, Math.min(130, rect.bottom - e.clientY));
+        assignHobbyBed(hobby);
         saveState();
+        renderGarden();
+      } else {
+        this.el.classList.remove('dragging');
       }
-      this.el.classList.remove('dragging');
     } else {
       openModal(this.hobbyId);
     }
@@ -1331,27 +1720,167 @@ const drag = {
   }
 };
 
-document.addEventListener('mousemove', e => drag.move(e));
-document.addEventListener('mouseup',   e => drag.end(e));
+const bedDrag = {
+  active: false,
+  mode: null, // 'move' | 'resize'
+  bedId: null,
+  el: null,
+  startX: 0,
+  startY: 0,
+  orig: null,
+  moved: false,
+
+  startMove(e, bedId, el) {
+    if (drag.hobbyId) return;
+    e.preventDefault();
+    e.stopPropagation();
+    this.active = true;
+    this.mode = 'move';
+    this.bedId = bedId;
+    this.el = el;
+    this.startX = e.clientX;
+    this.startY = e.clientY;
+    this.moved = false;
+    const bed = bedById(bedId);
+    this.orig = bed ? { x: bed.x, y: bed.y, w: bed.w, h: bed.h } : null;
+  },
+
+  startResize(e, bedId, el) {
+    if (drag.hobbyId) return;
+    e.preventDefault();
+    e.stopPropagation();
+    this.active = true;
+    this.mode = 'resize';
+    this.bedId = bedId;
+    this.el = el;
+    this.startX = e.clientX;
+    this.startY = e.clientY;
+    this.moved = false;
+    const bed = bedById(bedId);
+    this.orig = bed ? { x: bed.x, y: bed.y, w: bed.w, h: bed.h } : null;
+  },
+
+  move(e) {
+    if (!this.active || !this.orig) return;
+    const garden = document.getElementById('garden');
+    const rect = garden.getBoundingClientRect();
+    const dxPct = (e.clientX - this.startX) / rect.width * 100;
+    if (!this.moved && Math.sqrt((e.clientX - this.startX) ** 2 + (e.clientY - this.startY) ** 2) < 5) return;
+    this.moved = true;
+    this.el.classList.add(this.mode === 'resize' ? 'resizing' : 'dragging');
+
+    let next;
+    if (this.mode === 'move') {
+      // Mouse up → higher bottom (same as plants)
+      next = clampBed({
+        x: this.orig.x + dxPct,
+        y: this.orig.y + (this.startY - e.clientY),
+        w: this.orig.w,
+        h: this.orig.h,
+      });
+    } else {
+      // Top-right handle: drag right = wider, drag up = taller
+      next = clampBed({
+        x: this.orig.x,
+        y: this.orig.y,
+        w: this.orig.w + dxPct,
+        h: this.orig.h + (this.startY - e.clientY),
+      });
+    }
+    this.el.style.left = next.x + '%';
+    this.el.style.bottom = next.y + 'px';
+    this.el.style.width = next.w + '%';
+    this.el.style.height = next.h + 'px';
+    this._preview = next;
+  },
+
+  end() {
+    if (!this.active) return;
+    const bed = bedById(this.bedId);
+    if (bed && this.moved && this._preview) {
+      const trial = { ...this._preview };
+      if (bedOverlapsAny({ ...trial, id: bed.id }, bed.id)) {
+        showGardenToast('That space is already used by another garden bed. Move or resize the other bed first.');
+        bed.x = this.orig.x; bed.y = this.orig.y; bed.w = this.orig.w; bed.h = this.orig.h;
+      } else {
+        bed.x = trial.x; bed.y = trial.y; bed.w = trial.w; bed.h = trial.h;
+        recomputeAllBedMembership();
+        saveState();
+      }
+      renderGarden();
+    } else if (this.el) {
+      this.el.classList.remove('dragging', 'resizing');
+    }
+    this.active = false;
+    this.mode = null;
+    this.bedId = null;
+    this.el = null;
+    this.orig = null;
+    this._preview = null;
+    this.moved = false;
+  }
+};
+
+document.addEventListener('mousemove', e => { drag.move(e); bedDrag.move(e); });
+document.addEventListener('mouseup',   e => { drag.end(e); bedDrag.end(e); });
 
 // ─── Render Garden ───────────────────────────────────────────────────────────
 function renderGarden() {
   const garden = document.getElementById('garden');
   const hint = document.getElementById('empty-hint');
   const hobbies = state.hobbies;
+  const beds = ensureBeds();
 
-  hint.style.display = hobbies.length === 0 ? 'block' : 'none';
+  hint.style.display = (hobbies.length === 0 && beds.length === 0) ? 'block' : 'none';
 
   const grandTotal = hobbies.reduce((sum, h) => sum + totalHours(h), 0);
   document.getElementById('total-badge-val').textContent = fmtH(grandTotal);
 
   garden.innerHTML = '';
+
+  beds.forEach(bed => {
+    const el = document.createElement('div');
+    el.className = 'garden-bed brown-' + bedBrownLevel(bed);
+    el.dataset.bedId = bed.id;
+    el.style.left = bed.x + '%';
+    el.style.bottom = bed.y + 'px';
+    el.style.width = bed.w + '%';
+    el.style.height = bed.h + 'px';
+    el.innerHTML = `
+      <div class="garden-bed-soil"></div>
+      <div class="garden-bed-label">${escHtml(bed.name)}</div>
+      <button type="button" class="garden-bed-del" data-del-bed="${bed.id}" title="Remove bed">✕</button>
+      <div class="bed-resize" data-resize-bed="${bed.id}" title="Resize"></div>
+    `;
+    el.addEventListener('mousedown', e => {
+      if (e.target.closest('[data-del-bed]') || e.target.closest('[data-resize-bed]')) return;
+      bedDrag.startMove(e, bed.id, el);
+    });
+    el.querySelector('[data-resize-bed]').addEventListener('mousedown', e => {
+      bedDrag.startResize(e, bed.id, el);
+    });
+    el.querySelector('[data-del-bed]').addEventListener('click', e => {
+      e.stopPropagation();
+      showGardenToast(`Remove the “${bed.name}” garden bed? Plants stay in the garden.`, {
+        confirm: true,
+        onConfirm: () => {
+          state.beds = ensureBeds().filter(b => b.id !== bed.id);
+          state.hobbies.forEach(h => { if (h.bedId === bed.id) h.bedId = null; });
+          saveState();
+          renderGarden();
+        },
+      });
+    });
+    garden.appendChild(el);
+  });
+
   hobbies.forEach(hobby => {
     const hours = totalHours(hobby);
     const stage = getStage(hours);
     const sizes = [50, 60, 75, 90, 105, 120];
     const sz = sizes[stage];
     const svgH = Math.round(sz * 1.6);
+    const bed = hobby.bedId ? bedById(hobby.bedId) : null;
 
     const slot = document.createElement('div');
     slot.className = 'flower-slot';
@@ -1361,10 +1890,11 @@ function renderGarden() {
     slot.innerHTML = `
       <div style="height:${svgH}px;display:flex;align-items:flex-end;">${flowerSVG(hobby, sz, svgH)}</div>
       <div class="flower-name">${escHtml(hobby.name)}</div>
-      <div class="flower-hours">${fmtH(hours)}</div>
+      <div class="flower-hours">${fmtH(hours)}${bed ? ` · ${escHtml(bed.name)}` : ''}</div>
     `;
     slot.addEventListener('mousedown', e => {
       e.preventDefault();
+      e.stopPropagation();
       drag.start(e, hobby.id, slot);
     });
     garden.appendChild(slot);
@@ -1398,7 +1928,7 @@ function renderModal() {
       </div>
       <div>
         <div class="modal-title">${escHtml(hobby.name)}${hobby.generation > 1 ? ` <span style="font-size:13px;color:#aaa;font-weight:400;">gen ${hobby.generation}</span>` : ''}</div>
-        <div class="modal-sub">Stage: ${stageNames[stage]} · ${sessions.length} watering${sessions.length !== 1 ? 's' : ''}</div>
+        <div class="modal-sub">Stage: ${stageNames[stage]} · ${sessions.length} watering${sessions.length !== 1 ? 's' : ''}${hobby.bedId && bedById(hobby.bedId) ? ` · Bed: ${escHtml(bedById(hobby.bedId).name)}` : ''}</div>
         <div class="progress-bar-outer" style="width:160px;">
           <div class="progress-bar-inner" style="width:${Math.round(hobbyProgress(hobby)*100)}%"></div>
         </div>
@@ -1605,20 +2135,32 @@ function renderModal() {
   });
 
   document.getElementById('delete-hobby-btn').addEventListener('click', () => {
-    if (!confirm(`Remove "${hobby.name}" from your garden?`)) return;
-    state.hobbies = state.hobbies.filter(h => h.id !== selectedHobbyId);
-    saveState();
-    renderGarden();
-    document.getElementById('overlay').classList.remove('open');
+    showGardenToast(`Remove “${hobby.name}” from your garden?`, {
+      confirm: true,
+      onConfirm: () => {
+        state.hobbies = state.hobbies.filter(h => h.id !== selectedHobbyId);
+        saveState();
+        renderGarden();
+        document.getElementById('overlay').classList.remove('open');
+      },
+    });
   });
 }
 
 // ─── Add Hobby ───────────────────────────────────────────────────────────────
 let pickedColor = PALETTE[0];
 
+function fillHobbyBedSelect() {
+  const sel = document.getElementById('hobby-bed-select');
+  const beds = ensureBeds();
+  sel.innerHTML = `<option value="">Outside beds</option>` +
+    beds.map(b => `<option value="${b.id}">${escHtml(b.name)}</option>`).join('');
+}
+
 function openAddModal() {
   pickedColor = PALETTE[Math.floor(Math.random() * PALETTE.length)];
   document.getElementById('hobby-name').value = '';
+  fillHobbyBedSelect();
   renderSwatches();
   const ov = document.getElementById('overlay2');
   ov.style.display = 'flex';
@@ -1641,17 +2183,80 @@ function renderSwatches() {
   });
 }
 
+function syncBrownOptions() {
+  document.querySelectorAll('.brown-opt').forEach(btn => {
+    const on = Number(btn.dataset.brown) === pickedBrown;
+    btn.classList.toggle('selected', on);
+    btn.style.borderColor = on ? '#333' : 'transparent';
+  });
+}
+
+function openBedModal() {
+  pickedBrown = 1;
+  syncBrownOptions();
+  document.getElementById('bed-name').value = '';
+  document.getElementById('overlay-bed').style.display = 'flex';
+  setTimeout(() => document.getElementById('bed-name').focus(), 50);
+}
+
+document.getElementById('bed-brown-options').addEventListener('click', e => {
+  const btn = e.target.closest('.brown-opt');
+  if (!btn) return;
+  pickedBrown = Number(btn.dataset.brown);
+  syncBrownOptions();
+});
+
 document.getElementById('add-submit').addEventListener('click', () => {
   const name = document.getElementById('hobby-name').value.trim();
   if (!name) { document.getElementById('hobby-name').focus(); return; }
-  state.hobbies.push({ id: uid(), name, color: pickedColor, sessions: [], x: 8 + Math.random() * 84, y: Math.random() * 55 });
+  const bedId = document.getElementById('hobby-bed-select').value || null;
+  const bed = bedId ? bedById(bedId) : null;
+  let x, y, assignedBedId = null;
+  if (bed) {
+    const p = pointInsideBed(bed);
+    x = p.x; y = p.y; assignedBedId = bed.id;
+  } else {
+    x = 8 + Math.random() * 84;
+    y = Math.random() * 55;
+  }
+  state.hobbies.push({
+    id: uid(), name, color: pickedColor, sessions: [],
+    x, y, bedId: assignedBedId,
+  });
   saveState();
   renderGarden();
   document.getElementById('overlay2').style.display = 'none';
 });
 
+document.getElementById('bed-submit').addEventListener('click', () => {
+  const name = document.getElementById('bed-name').value.trim();
+  if (!name) { document.getElementById('bed-name').focus(); return; }
+  const w = 22, h = 70;
+  const spot = findFreeBedSpot(w, h);
+  if (!spot) {
+    showGardenToast('No free space for a new bed. Move or resize an existing bed, then try again.');
+    return;
+  }
+  const bed = clampBed({
+    id: uid().replace(/[^a-z0-9]/gi, '') || uid(),
+    name,
+    brown: pickedBrown,
+    x: spot.x,
+    y: spot.y,
+    w,
+    h,
+  });
+  ensureBeds().push(bed);
+  saveState();
+  renderGarden();
+  document.getElementById('overlay-bed').style.display = 'none';
+});
+
 document.getElementById('hobby-name').addEventListener('keydown', e => {
   if (e.key === 'Enter') document.getElementById('add-submit').click();
+});
+document.getElementById('bed-name').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('bed-submit').click();
 });
 
 // ─── Close handlers ──────────────────────────────────────────────────────────
@@ -1684,8 +2289,16 @@ document.getElementById('overlay2').addEventListener('click', e => {
   if (e.target === document.getElementById('overlay2'))
     document.getElementById('overlay2').style.display = 'none';
 });
+document.getElementById('bed-modal-close').addEventListener('click', () => {
+  document.getElementById('overlay-bed').style.display = 'none';
+});
+document.getElementById('overlay-bed').addEventListener('click', e => {
+  if (e.target === document.getElementById('overlay-bed'))
+    document.getElementById('overlay-bed').style.display = 'none';
+});
 
 document.getElementById('add-btn').addEventListener('click', openAddModal);
+document.getElementById('bed-btn').addEventListener('click', openBedModal);
 
 // ─── Compare / Charts ────────────────────────────────────────────────────────
 let activeChart = null;
@@ -1698,6 +2311,7 @@ function openCompare(tab = 'totals') {
     { id: 'overtime', label: 'Over time' },
     { id: 'heatmap',  label: 'Heatmap' },
     { id: 'progress', label: 'Progress' },
+    { id: 'beds',     label: 'Beds' },
   ];
   body.innerHTML = `
     <div style="display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap;">
@@ -1713,6 +2327,7 @@ function openCompare(tab = 'totals') {
   if (tab === 'overtime') chartOverTime(area);
   if (tab === 'heatmap')  chartHeatmap(area);
   if (tab === 'progress') chartProgress(area);
+  if (tab === 'beds')     chartBeds(area);
   document.getElementById('compare-overlay').style.display = 'flex';
 }
 
@@ -1893,6 +2508,120 @@ function chartProgress(area) {
       </div>`;
     }).join('')}
   `;
+}
+
+function hoursInLastDays(hobby, days) {
+  const cutoff = Date.now() - days * 86400000;
+  return (hobby.sessions || []).reduce((sum, s) => {
+    const t = new Date(s.date).getTime();
+    return t >= cutoff ? sum + s.hours : sum;
+  }, 0);
+}
+
+function lastWateredAt(hobby) {
+  const sessions = hobby.sessions || [];
+  if (!sessions.length) return null;
+  let max = 0;
+  sessions.forEach(s => { const t = new Date(s.date).getTime(); if (t > max) max = t; });
+  return max || null;
+}
+
+function bedGroups() {
+  const beds = ensureBeds();
+  const groups = beds.map(b => ({
+    id: b.id,
+    name: b.name,
+    color: bedBrown(b),
+    hobbies: state.hobbies.filter(h => h.bedId === b.id),
+  }));
+  const outside = state.hobbies.filter(h => !h.bedId || !bedById(h.bedId));
+  groups.push({
+    id: '__outside',
+    name: 'Outside beds',
+    color: '#8a8070',
+    hobbies: outside,
+  });
+  return groups;
+}
+
+function chartBeds(area) {
+  const groups = bedGroups().filter(g => g.id !== '__outside' || g.hobbies.length > 0 || ensureBeds().length === 0);
+  if (!ensureBeds().length && !state.hobbies.length) {
+    area.innerHTML = '<p style="color:#555;font-size:14px;">No garden beds yet. Create one with <b>＋ Garden bed</b>, then drag plants into it.</p>';
+    return;
+  }
+
+  const withStats = groups.map(g => {
+    const total = g.hobbies.reduce((s, h) => s + totalHours(h), 0);
+    const week = g.hobbies.reduce((s, h) => s + hoursInLastDays(h, 7), 0);
+    let last = null;
+    g.hobbies.forEach(h => {
+      const t = lastWateredAt(h);
+      if (t != null && (last == null || t > last)) last = t;
+    });
+    const daysSince = last == null ? Infinity : (Date.now() - last) / 86400000;
+    return { ...g, total, week, last, daysSince };
+  });
+
+  const realBeds = withStats.filter(g => g.id !== '__outside');
+  let growing = null, needs = null;
+  if (realBeds.length) {
+    growing = [...realBeds].sort((a, b) => b.week - a.week || b.total - a.total)[0];
+    needs = [...realBeds].sort((a, b) => b.daysSince - a.daysSince || a.total - b.total)[0];
+  }
+
+  const maxH = Math.max(...withStats.map(g => g.total), 0.01);
+  const growingLabel = growing
+    ? `${escHtml(growing.name)} (${fmtH(growing.week)} this week)`
+    : '—';
+  const needsLabel = needs
+    ? (needs.daysSince === Infinity
+      ? `${escHtml(needs.name)} (never watered)`
+      : `${escHtml(needs.name)} (${Math.floor(needs.daysSince)}d since last)`)
+    : '—';
+
+  area.innerHTML = `
+    <div style="font-size:12px;color:#3a3a3a;margin-bottom:12px;line-height:1.4;">Area of improvement — hours by garden bed. Click a bar to see its plants.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
+      <div class="stat-card"><div class="val" style="font-size:15px;color:#2d6e23;">${growingLabel}</div><div class="lbl">Growing most</div></div>
+      <div class="stat-card"><div class="val" style="font-size:15px;color:#8a5a00;">${needsLabel}</div><div class="lbl">Needs care</div></div>
+    </div>
+    <div id="beds-bars">
+      ${withStats.map(g => {
+        const pct = (g.total / maxH * 100).toFixed(1);
+        return `<div class="bar-row bed-bar" data-bed-group="${g.id}" style="margin-bottom:12px;cursor:pointer;">
+          <div class="bar-label" title="${escHtml(g.name)}">${escHtml(g.name)} <span style="color:#aaa;font-weight:500;">(${g.hobbies.length})</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${g.color};"></div></div>
+          <div class="bar-val">${fmtH(g.total)}</div>
+        </div>`;
+      }).join('')}
+    </div>
+    <div id="beds-detail" style="margin-top:14px;"></div>
+  `;
+
+  const detail = area.querySelector('#beds-detail');
+  area.querySelectorAll('.bed-bar').forEach(row => {
+    row.addEventListener('click', () => {
+      area.querySelectorAll('.bed-bar').forEach(r => r.classList.remove('active'));
+      row.classList.add('active');
+      const g = withStats.find(x => x.id === row.dataset.bedGroup);
+      if (!g) return;
+      if (!g.hobbies.length) {
+        detail.innerHTML = `<p style="color:#888;font-size:13px;">No plants in ${escHtml(g.name)} yet. Drag flowers into the bed.</p>`;
+        return;
+      }
+      const sorted = [...g.hobbies].sort((a, b) => totalHours(b) - totalHours(a));
+      detail.innerHTML = `
+        <div style="font-size:13px;font-weight:700;margin-bottom:8px;color:#333;">${escHtml(g.name)} plants</div>
+        ${sorted.map(h => `
+          <div style="display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px solid #f0f0f0;font-size:13px;">
+            <span style="font-weight:600;color:#333;">${escHtml(hobbyLabel(h))}</span>
+            <span style="color:#888;">${fmtH(totalHours(h))}</span>
+          </div>
+        `).join('')}
+      `;
+    });
+  });
 }
 
 document.getElementById('compare-btn').addEventListener('click', () => openCompare());
@@ -2238,7 +2967,7 @@ document.getElementById('qt-log').addEventListener('click', () => {
           renderList();
         }
       } catch (err) {
-        alert(err.message || 'Could not play this audio.');
+        showGardenToast(err.message || 'Could not play this audio.');
       }
     }
   });
@@ -2256,7 +2985,10 @@ document.getElementById('qt-log').addEventListener('click', () => {
     const playId = e.target.closest('[data-play]')?.getAttribute('data-play');
     const delId = e.target.closest('[data-del]')?.getAttribute('data-del');
     if (delId) {
-      if (confirm('Delete this audio from your library?')) await deleteTrack(delId);
+      showGardenToast('Delete this audio from your library?', {
+        confirm: true,
+        onConfirm: () => { deleteTrack(delId); },
+      });
       return;
     }
     if (!playId) return;
@@ -2267,7 +2999,7 @@ document.getElementById('qt-log').addEventListener('click', () => {
       else await playTrack(track);
     } catch (err) {
       console.error(err);
-      alert(err.message || 'Could not play this audio.');
+      showGardenToast(err.message || 'Could not play this audio.');
     }
   });
 
@@ -2280,7 +3012,7 @@ document.getElementById('qt-log').addEventListener('click', () => {
       await playTrack(track);
     } catch (err) {
       console.error(err);
-      alert(err.message || 'Could not save that audio file.');
+      showGardenToast(err.message || 'Could not save that audio file.');
     }
   });
 })();
@@ -2303,8 +3035,12 @@ function escHtml(s) {
 // ─── Init ────────────────────────────────────────────────────────────────────
 (async () => {
   state = await loadState();
+  if (!Array.isArray(state.hobbies)) state.hobbies = [];
+  if (!Array.isArray(state.beds)) state.beds = [];
+  if (!Array.isArray(state.audioLibrary)) state.audioLibrary = [];
+  let dirty = false;
   // Spread any hobbies that landed at the default center
-  state.hobbies.filter(h => h.y === undefined).forEach(h => { h.y = Math.random() * 55; });
+  state.hobbies.filter(h => h.y === undefined).forEach(h => { h.y = Math.random() * 55; dirty = true; });
   const unpositioned = state.hobbies.filter(h => h.x === undefined);
   if (unpositioned.length > 0) {
     unpositioned.forEach((h, i) => {
@@ -2314,9 +3050,13 @@ function escHtml(s) {
       // add a little jitter so they don't look like a perfect line
       h.x = Math.max(8, Math.min(92, spread + (Math.random() - 0.5) * 8));
     });
-    saveState();
+    dirty = true;
   }
-  if (!Array.isArray(state.audioLibrary)) state.audioLibrary = [];
+  state.beds.forEach(b => clampBed(b));
+  const before = state.hobbies.map(h => h.bedId || '').join(',');
+  recomputeAllBedMembership();
+  const after = state.hobbies.map(h => h.bedId || '').join(',');
+  if (dirty || before !== after) saveState();
   renderGarden();
   renderSwatches();
 })();

@@ -33,8 +33,10 @@ Everything is saved to `data.json` in this folder. It's plain JSON — you can b
 - **Wins tracker** — log small victories and milestones for each hobby
 - **40h goal system** — progress tracks toward 40 hours; on completion you're prompted to spawn the next generation of the same flower as a fresh bud
 - **Drag to reposition** — click and drag any flower to move it anywhere in the garden; position saves automatically
-- **Compare view** — standalone comparison panel with four chart types: total hours (bar), hours over time (line, carries forward on days with no activity so slopes stay accurate), heatmap (GitHub-style activity grid, weeks start Monday, with avg/day, active days, longest streak, and best day stats), and goal progress (bar toward 40h per hobby)
+- **Garden beds** — create named plots (e.g. Uni, Health), drag/resize them on the garden, and group hobbies by dragging plants in or out; beds cannot overlap
+- **Compare view** — standalone comparison panel with chart tabs: total hours (bar), hours over time (line, carries forward on days with no activity so slopes stay accurate), heatmap (GitHub-style activity grid, weeks start Monday, with avg/day, active days, longest streak, and best day stats), goal progress (bar toward 40h per hobby), and beds (hours by plot with growing-most / needs-care highlights)
 - **Ambient bird sounds** — play/pause background birdsong while you work
+- **Audio library** — upload focus audio (brown noise, podcasts, Quran, etc.), search and play separately from birds
 
 ## Growth stages
 
@@ -53,10 +55,12 @@ Flower patterns (petal shape, streaks, spots, bicolor, tip color) unlock at the 
 
 - **Click** a flower — open its detail modal to log time manually or write notes
 - **Click and drag** a flower — reposition it in the garden (position saves automatically)
-- **+ Add hobby** button — create a new flower with a name and color
+- **+ Plant a hobby** — create a new flower with a name, color, and optional garden bed
+- **+ Garden bed** — create a plot; drag to move, corner handle to resize, ✕ to remove
 - **⏱ Timer** button — open the standalone Quick Timer and pick a hobby to water
-- **⚖ Compare** button — open the comparison panel across all hobbies
+- **⚖ Compare** button — open the comparison panel across all hobbies (includes Beds tab)
 - **🔇/🔊 Birds** button — toggle ambient bird sounds
+- **🎧 Audio** button — upload/search/play focus audio
 
 ## This is mine, create yours
 ![Hobby Garden](screenshot.png)
