@@ -33,10 +33,12 @@ Everything is saved to `data.json` in this folder. It's plain JSON — you can b
 - **Wins tracker** — log small victories and milestones for each hobby
 - **40h goal system** — progress tracks toward 40 hours; on completion you're prompted to spawn the next generation of the same flower as a fresh bud
 - **Drag to reposition** — click and drag any flower to move it anywhere in the garden; position saves automatically
-- **Garden beds** — create named plots (e.g. Uni, Health), drag/resize them on the garden, and group hobbies by dragging plants in or out; beds cannot overlap
-- **Compare view** — standalone comparison panel with chart tabs: total hours (bar), hours over time (line, carries forward on days with no activity so slopes stay accurate), heatmap (GitHub-style activity grid, weeks start Monday, with avg/day, active days, longest streak, and best day stats), goal progress (bar toward 40h per hobby), and beds (hours by plot with growing-most / needs-care highlights)
+- **Garden beds** — create named wooden plots with dirt (e.g. Uni, Health), choose a brown shade, drag/resize them on the garden, and group hobbies by dragging plants in or out; beds cannot overlap and new beds find the next free spot — *added by meid*
+- **Compare view** — standalone comparison panel with chart tabs: total hours (bar), hours over time (line, carries forward on days with no activity so slopes stay accurate), heatmap (GitHub-style activity grid, weeks start Monday, with avg/day, active days, longest streak, and best day stats), and goal progress (bar toward 40h per hobby)
+- **Beds stats tab** — Compare → Beds shows hours by plot with growing-most / needs-care highlights — *added by meid*
 - **Ambient bird sounds** — play/pause background birdsong while you work
-- **Audio library** — upload focus audio (brown noise, podcasts, Quran, etc.), search and play separately from birds
+- **Audio library** — upload focus audio (brown noise, podcasts, Quran, etc.), search and play separately from birds — *added by meid*
+- **In-app messages** — notices and confirms use an in-app dialog instead of browser alerts — *added by meid*
 
 ## Growth stages
 
@@ -56,15 +58,19 @@ Flower patterns (petal shape, streaks, spots, bicolor, tip color) unlock at the 
 - **Click** a flower — open its detail modal to log time manually or write notes
 - **Click and drag** a flower — reposition it in the garden (position saves automatically)
 - **+ Plant a hobby** — create a new flower with a name, color, and optional garden bed
-- **+ Garden bed** — create a plot; drag to move, corner handle to resize, ✕ to remove
+- **+ Garden bed** — create a plot; drag to move, corner handle to resize, ✕ to remove — *added by meid*
 - **⏱ Timer** button — open the standalone Quick Timer and pick a hobby to water
-- **⚖ Compare** button — open the comparison panel across all hobbies (includes Beds tab)
+- **⚖ Compare** button — open the comparison panel across all hobbies (includes Beds tab — *added by meid*)
 - **🔇/🔊 Birds** button — toggle ambient bird sounds
-- **🎧 Audio** button — upload/search/play focus audio
+- **🎧 Audio** button — upload/search/play focus audio — *added by meid*
 
 ## This is mine, create yours
-![Hobby Garden](screenshot.png)
+![Hobby Garden](Screenshot_meid.png)
 
 ## Credits
 
 - Bird sounds by [hargissssound](https://freesound.org/people/hargissssound/) on Freesound
+
+## Note
+
+Only features marked **added by meid** were added by meid. Everything else comes from the original repo by [nasqnik](https://github.com/nasqnik).
