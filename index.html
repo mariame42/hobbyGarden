@@ -708,6 +708,8 @@
 
 <!-- Ambient audio -->
 <audio id="birds-audio" src="/birds.wav" loop></audio>
+<audio id="library-audio"></audio>
+<input type="file" id="audio-file-input" accept="audio/*" style="display:none;">
 
 <!-- Floating timer widget -->
 <div id="timer-widget" style="display:none;position:fixed;bottom:80px;left:24px;z-index:90;background:rgba(255,255,255,0.96);border:2px solid rgba(108,92,231,0.3);border-radius:18px;padding:12px 16px;box-shadow:0 8px 32px rgba(0,0,0,0.18);cursor:pointer;min-width:160px;backdrop-filter:blur(6px);transition:transform 0.15s,box-shadow 0.15s;">
@@ -724,9 +726,31 @@
 
 <!-- Buttons -->
 <button id="sound-btn" style="position:fixed;bottom:22px;left:160px;background:rgba(255,255,255,0.93);border:2px solid rgba(0,0,0,0.1);border-radius:28px;padding:10px 20px;font-size:14px;font-weight:600;color:#2d6e23;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,0.2);transition:transform 0.15s,box-shadow 0.15s;z-index:20;">🔇 Birds</button>
-<button id="quick-timer-btn" style="position:fixed;bottom:22px;left:268px;background:rgba(255,255,255,0.93);border:2px solid rgba(0,0,0,0.1);border-radius:28px;padding:10px 20px;font-size:14px;font-weight:600;color:#6c5ce7;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,0.2);transition:transform 0.15s,box-shadow 0.15s;z-index:20;">⏱ Timer</button>
+<button id="music-btn" title="Your uploaded audio" style="position:fixed;bottom:22px;left:268px;background:rgba(255,255,255,0.93);border:2px solid rgba(0,0,0,0.1);border-radius:28px;padding:10px 16px;font-size:14px;font-weight:600;color:#2d6e23;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,0.2);transition:transform 0.15s,box-shadow 0.15s;z-index:20;">🎧 Audio</button>
+<button id="quick-timer-btn" style="position:fixed;bottom:22px;left:380px;background:rgba(255,255,255,0.93);border:2px solid rgba(0,0,0,0.1);border-radius:28px;padding:10px 20px;font-size:14px;font-weight:600;color:#6c5ce7;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,0.2);transition:transform 0.15s,box-shadow 0.15s;z-index:20;">⏱ Timer</button>
 <button id="compare-btn" style="position:fixed;bottom:22px;left:24px;background:rgba(255,255,255,0.93);border:2px solid rgba(0,0,0,0.1);border-radius:28px;padding:10px 20px;font-size:14px;font-weight:600;color:#2d6e23;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,0.2);transition:transform 0.15s,box-shadow 0.15s;z-index:20;">⚖ Compare</button>
 <button id="add-btn">＋ Plant a hobby</button>
+
+<!-- Music library modal -->
+<div id="music-overlay" style="display:none;position:fixed;inset:0;background:var(--modal-bg);z-index:100;align-items:center;justify-content:center;backdrop-filter:blur(3px);">
+  <div style="background:#fff;border-radius:20px;padding:28px;width:520px;max-width:95vw;max-height:88vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 24px 64px rgba(0,0,0,0.28);position:relative;">
+    <button id="music-close" style="position:absolute;top:18px;right:18px;background:#f0f0f0;border:none;border-radius:50%;width:30px;height:30px;font-size:16px;cursor:pointer;color:#555;">✕</button>
+    <div style="font-size:20px;font-weight:700;margin-bottom:6px;">Audio</div>
+    <div style="font-size:13px;color:#3a3a3a;margin-bottom:16px;line-height:1.45;">Music isn’t great for your brain while focusing — try brown noise, podcasts, Quran, or other calm audio you like while you work.</div>
+    <div style="display:flex;gap:8px;margin-bottom:12px;">
+      <input id="music-search" type="search" placeholder="Search uploaded audio…" style="flex:1;border:1.5px solid #ddd;border-radius:12px;padding:10px 14px;font-size:14px;outline:none;">
+      <button id="music-upload-btn" style="background:#2d6e23;color:#fff;border:none;border-radius:12px;padding:10px 14px;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;">＋ Upload</button>
+    </div>
+    <div id="music-now" style="display:none;background:#f4faf2;border:1.5px solid #d5ebd0;border-radius:12px;padding:10px 12px;margin-bottom:12px;font-size:13px;color:#2d6e23;">
+      <div style="font-weight:600;margin-bottom:6px;" id="music-now-name"></div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <button id="music-play-btn" style="background:#fff;border:1.5px solid #cfe5ca;border-radius:10px;padding:6px 12px;font-size:13px;font-weight:600;color:#2d6e23;cursor:pointer;">▶ Play</button>
+        <button id="music-stop-btn" style="background:#fff;border:1.5px solid #ddd;border-radius:10px;padding:6px 12px;font-size:13px;font-weight:600;color:#888;cursor:pointer;">Stop</button>
+      </div>
+    </div>
+    <div id="music-list" style="overflow-y:auto;flex:1;min-height:180px;"></div>
+  </div>
+</div>
 
 <!-- Compare Modal -->
 <div id="compare-overlay" style="display:none;position:fixed;inset:0;background:var(--modal-bg);z-index:100;align-items:center;justify-content:center;backdrop-filter:blur(3px);">
@@ -1988,18 +2012,276 @@ document.getElementById('qt-log').addEventListener('click', () => {
 });
 
 (function() {
-  const btn   = document.getElementById('sound-btn');
-  const audio = document.getElementById('birds-audio');
-  let playing = false;
-  btn.addEventListener('click', () => {
-    if (playing) {
-      audio.pause();
-      btn.textContent = '🔇 Birds';
+  const birdsBtn = document.getElementById('sound-btn');
+  const birdsAudio = document.getElementById('birds-audio');
+  let birdsPlaying = false;
+  birdsBtn.addEventListener('click', () => {
+    if (birdsPlaying) {
+      birdsAudio.pause();
+      birdsBtn.textContent = '🔇 Birds';
     } else {
-      audio.play();
-      btn.textContent = '🔊 Birds';
+      birdsAudio.play().catch(() => {});
+      birdsBtn.textContent = '🔊 Birds';
     }
-    playing = !playing;
+    birdsPlaying = !birdsPlaying;
+  });
+})();
+
+(function() {
+  const MAX_AUDIO_BYTES = 15 * 1024 * 1024;
+  const IDB_NAME = 'hobby-garden-audio';
+  const IDB_STORE = 'library';
+  const overlay = document.getElementById('music-overlay');
+  const listEl = document.getElementById('music-list');
+  const searchEl = document.getElementById('music-search');
+  const fileInput = document.getElementById('audio-file-input');
+  const libAudio = document.getElementById('library-audio');
+  const nowEl = document.getElementById('music-now');
+  const nowName = document.getElementById('music-now-name');
+  const playBtn = document.getElementById('music-play-btn');
+  const stopBtn = document.getElementById('music-stop-btn');
+  let objectUrl = null;
+  let currentId = null;
+  let playing = false;
+
+  function ensureLibrary() {
+    if (!Array.isArray(state.audioLibrary)) state.audioLibrary = [];
+    return state.audioLibrary;
+  }
+
+  function openDb() {
+    return new Promise((resolve, reject) => {
+      const req = indexedDB.open(IDB_NAME, 2);
+      req.onupgradeneeded = () => {
+        const db = req.result;
+        if (!db.objectStoreNames.contains(IDB_STORE)) db.createObjectStore(IDB_STORE);
+      };
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => reject(req.error);
+    });
+  }
+
+  async function idbPut(id, blob) {
+    const db = await openDb();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(IDB_STORE, 'readwrite');
+      tx.objectStore(IDB_STORE).put(blob, id);
+      tx.oncomplete = () => resolve();
+      tx.onerror = () => reject(tx.error);
+    });
+  }
+
+  async function idbGet(id) {
+    const db = await openDb();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(IDB_STORE, 'readonly');
+      const req = tx.objectStore(IDB_STORE).get(id);
+      req.onsuccess = () => resolve(req.result || null);
+      req.onerror = () => reject(req.error);
+    });
+  }
+
+  async function idbDel(id) {
+    const db = await openDb();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(IDB_STORE, 'readwrite');
+      tx.objectStore(IDB_STORE).delete(id);
+      tx.oncomplete = () => resolve();
+      tx.onerror = () => reject(tx.error);
+    });
+  }
+
+  function updateNowPlaying(track) {
+    if (!track) {
+      nowEl.style.display = 'none';
+      return;
+    }
+    nowEl.style.display = 'block';
+    nowName.textContent = track.name;
+    playBtn.textContent = playing ? '⏸ Pause' : '▶ Play';
+  }
+
+  function renderList() {
+    const q = (searchEl.value || '').trim().toLowerCase();
+    const items = ensureLibrary().filter(t => !q || t.name.toLowerCase().includes(q));
+    if (!items.length) {
+      listEl.innerHTML = `<div style="color:#999;font-size:14px;padding:24px 8px;text-align:center;">${
+        ensureLibrary().length ? 'No matches.' : 'No uploads yet. Click Upload to add audio.'
+      }</div>`;
+      return;
+    }
+    listEl.innerHTML = items.map(t => `
+      <div style="display:flex;align-items:center;gap:8px;padding:10px 8px;border-bottom:1px solid #f0f0f0;">
+        <button data-play="${t.id}" style="background:${currentId === t.id && playing ? '#e8f5e4' : '#f7f7f7'};border:1.5px solid #ddd;border-radius:10px;padding:6px 10px;font-size:13px;font-weight:600;cursor:pointer;color:#2d6e23;">${
+          currentId === t.id && playing ? '⏸' : '▶'
+        }</button>
+        <div style="flex:1;min-width:0;font-size:14px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${escHtml(t.name)}">${escHtml(t.name)}</div>
+        <button data-del="${t.id}" title="Delete" style="background:transparent;border:none;color:#bbb;font-size:16px;cursor:pointer;padding:4px 8px;">✕</button>
+      </div>
+    `).join('');
+  }
+
+  async function resolveUrl(track) {
+    if (USE_SERVER) return '/library-audio/' + track.id + '?t=' + Date.now();
+    const blob = await idbGet(track.id);
+    if (!blob) throw new Error('Audio file missing locally.');
+    return URL.createObjectURL(blob);
+  }
+
+  async function playTrack(track) {
+    if (objectUrl) { URL.revokeObjectURL(objectUrl); objectUrl = null; }
+    libAudio.pause();
+    const url = await resolveUrl(track);
+    if (url.startsWith('blob:')) objectUrl = url;
+    libAudio.src = url;
+    libAudio.load();
+    currentId = track.id;
+    await libAudio.play();
+    playing = true;
+    updateNowPlaying(track);
+    renderList();
+  }
+
+  function pauseTrack() {
+    libAudio.pause();
+    playing = false;
+    const track = ensureLibrary().find(t => t.id === currentId);
+    updateNowPlaying(track || null);
+    renderList();
+  }
+
+  function stopTrack() {
+    libAudio.pause();
+    libAudio.removeAttribute('src');
+    libAudio.load();
+    if (objectUrl) { URL.revokeObjectURL(objectUrl); objectUrl = null; }
+    playing = false;
+    currentId = null;
+    updateNowPlaying(null);
+    renderList();
+  }
+
+  async function uploadFile(file) {
+    if (file.size > MAX_AUDIO_BYTES) {
+      const mb = (file.size / (1024 * 1024)).toFixed(1);
+      throw new Error(`That file is ${mb} MB. Please choose an audio file under 15 MB.`);
+    }
+    const track = {
+      id: uid().replace(/[^a-z0-9]/gi, ''),
+      name: file.name,
+      mime: file.type || 'audio/mpeg',
+    };
+    if (!track.id) track.id = Date.now().toString(36);
+    if (USE_SERVER) {
+      const res = await fetch('/library-audio', {
+        method: 'POST',
+        headers: {
+          'Content-Type': track.mime,
+          'X-Audio-Name': encodeURIComponent(track.name),
+          'X-Audio-Id': track.id,
+        },
+        body: file,
+      });
+      if (!res.ok) throw new Error('Server could not save the audio file.');
+    } else {
+      await idbPut(track.id, file);
+    }
+    ensureLibrary().push(track);
+    saveState();
+    renderList();
+    return track;
+  }
+
+  async function deleteTrack(id) {
+    if (currentId === id) stopTrack();
+    state.audioLibrary = ensureLibrary().filter(t => t.id !== id);
+    saveState();
+    if (USE_SERVER) {
+      await fetch('/library-audio/' + id, { method: 'DELETE' }).catch(() => {});
+    } else {
+      await idbDel(id).catch(() => {});
+    }
+    renderList();
+  }
+
+  function openMusic() {
+    ensureLibrary();
+    overlay.style.display = 'flex';
+    searchEl.value = '';
+    renderList();
+    const track = ensureLibrary().find(t => t.id === currentId);
+    updateNowPlaying(track || null);
+    searchEl.focus();
+  }
+
+  function closeMusic() {
+    overlay.style.display = 'none';
+  }
+
+  document.getElementById('music-btn').addEventListener('click', openMusic);
+  document.getElementById('music-close').addEventListener('click', closeMusic);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeMusic(); });
+  document.getElementById('music-upload-btn').addEventListener('click', () => fileInput.click());
+  searchEl.addEventListener('input', renderList);
+
+  playBtn.addEventListener('click', async () => {
+    const track = ensureLibrary().find(t => t.id === currentId);
+    if (!track) return;
+    if (playing) pauseTrack();
+    else {
+      try {
+        if (!libAudio.src) await playTrack(track);
+        else {
+          await libAudio.play();
+          playing = true;
+          updateNowPlaying(track);
+          renderList();
+        }
+      } catch (err) {
+        alert(err.message || 'Could not play this audio.');
+      }
+    }
+  });
+
+  stopBtn.addEventListener('click', stopTrack);
+
+  libAudio.addEventListener('ended', () => {
+    playing = false;
+    const track = ensureLibrary().find(t => t.id === currentId);
+    updateNowPlaying(track || null);
+    renderList();
+  });
+
+  listEl.addEventListener('click', async e => {
+    const playId = e.target.closest('[data-play]')?.getAttribute('data-play');
+    const delId = e.target.closest('[data-del]')?.getAttribute('data-del');
+    if (delId) {
+      if (confirm('Delete this audio from your library?')) await deleteTrack(delId);
+      return;
+    }
+    if (!playId) return;
+    const track = ensureLibrary().find(t => t.id === playId);
+    if (!track) return;
+    try {
+      if (currentId === playId && playing) pauseTrack();
+      else await playTrack(track);
+    } catch (err) {
+      console.error(err);
+      alert(err.message || 'Could not play this audio.');
+    }
+  });
+
+  fileInput.addEventListener('change', async () => {
+    const file = fileInput.files && fileInput.files[0];
+    fileInput.value = '';
+    if (!file) return;
+    try {
+      const track = await uploadFile(file);
+      await playTrack(track);
+    } catch (err) {
+      console.error(err);
+      alert(err.message || 'Could not save that audio file.');
+    }
   });
 })();
 document.getElementById('compare-close').addEventListener('click', () => {
@@ -2034,6 +2316,7 @@ function escHtml(s) {
     });
     saveState();
   }
+  if (!Array.isArray(state.audioLibrary)) state.audioLibrary = [];
   renderGarden();
   renderSwatches();
 })();
